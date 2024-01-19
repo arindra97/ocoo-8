@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="report_session"
+            model="openacademy.session"
+            string="Report QWeb"
+            name="openacademy.report_session_view"
+            file="openacademy.report_session"
+            report_type="qweb-pdf" />
+
+        <!-- paperformat -->
+        <record id="paperformat_do" model="report.paperformat">
+            <field name="name">Session Report</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">30</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="openacademy.report_session" model="ir.actions.report.xml">
+                <field name="paperformat_id" ref="openacademy.paperformat_do"/>
+        </record>
+
+        <!-- <template id="report_session_view">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="report.external_layout">
+                        <div class="page page-top">
+                            <h2 t-field="doc.name"/>
+                            <p>From <span t-field="doc.start_date"/> to <span t-field="doc.end_date"/></p>
+                            <h3>Attendees:</h3>
+                            <ol>
+                                <t t-foreach="doc.attendee_ids" t-as="attendee">
+                                    <li><span t-field="attendee.name"/></li>
+                                </t>
+                            </ol>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template> -->
+
+        <template id="report_session_view">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <h2 style="padding-top:100px" t-field="doc.name"/>
+                        <p>From <span t-field="doc.start_date"/> to <span t-field="doc.end_date"/></p>
+                        <h3>Attendees:</h3>
+                        <ol>
+                            <t t-foreach="doc.attendee_ids" t-as="attendee">
+                                <li style="margin-left:10px"><span t-field="attendee.name"/></li>
+                            </t>
+                        </ol>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
